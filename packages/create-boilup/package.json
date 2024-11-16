@@ -1,6 +1,7 @@
 {
   "name": "create-boilup",
   "version": "0.1.0",
+  "packageManager": "npm@9.8.1",
   "bin": {
     "create-boilup": "./dist/index.js"
   },

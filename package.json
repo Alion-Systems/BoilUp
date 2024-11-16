@@ -1,6 +1,7 @@
 {
   "name": "boilup",
   "private": true,
+  "packageManager": "npm@9.8.1",
   "scripts": {
     "dev": "turbo run dev",
     "build": "turbo run build",
