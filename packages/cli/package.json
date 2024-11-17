@@ -1,0 +1,19 @@
+{
+    "name": "@boilup/cli",
+    "version": "0.1.0",
+    "bin": {
+      "boilup": "./dist/index.js"
+    },
+    "scripts": {
+      "dev": "tsc -w",
+      "build": "tsc",
+      "test": "jest"
+    },
+    "dependencies": {
+      "commander": "^11.0.0",
+      "inquirer": "^9.2.10",
+      "chalk": "^5.3.0",
+      "ora": "^7.0.1",
+      "@boilup/core": "workspace:*"
+    }
+  }

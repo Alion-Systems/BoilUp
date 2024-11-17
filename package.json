@@ -1,17 +1,24 @@
 {
   "name": "boilup",
+  "version": "0.1.0",
   "private": true,
-  "packageManager": "npm@9.8.1",
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
     "dev": "turbo run dev",
     "build": "turbo run build",
     "test": "turbo run test",
+    "simulate": "turbo run simulate",
     "lint": "turbo run lint"
   },
-  "workspaces": [
-    "packages/*"
-  ],
   "devDependencies": {
-    "turbo": "latest"
+    "turbo": "^1.10.0",
+    "typescript": "^5.0.0",
+    "eslint": "^8.0.0",
+    "prettier": "^2.8.8",
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0"
   }
 }

@@ -1,59 +1,55 @@
-// packages/core/src/features/createFeature.ts
+import { z } from 'zod';
 
-interface Component {
+export interface FeatureConfig {
   name: string;
-  type: 'server' | 'client';
-  features: string[];
-}
-
-interface Hook {
-  name: string;
-  returnType: string;
-}
-
-interface APIRoute {
-  name: string;
-  method: 'GET' | 'POST' | 'PUT' | 'DELETE';
-}
-
-interface FeatureConfig {
-  name: string;
-  components?: Component[];
-  hooks?: Hook[];
-  api?: APIRoute[];
+  components?: string[];
+  hooks?: string[];
+  api?: {
+    routes: string[];
+    middleware?: string[];
+  };
+  database?: {
+    models: string[];
+    migrations: string[];
+  };
 }
 
 export function createFeature(config: FeatureConfig) {
   return {
     name: config.name,
-
+    
+    setup: async () => {
+      // Set up feature structure
+      await createFeatureStructure(config);
+      
+      // Generate components
+      if (config.components) {
+        await generateComponents(config.components);
+      }
+      
+      // Set up API routes
+      if (config.api) {
+        await setupAPIRoutes(config.api);
+      }
+      
+      // Set up database
+      if (config.database) {
+        await setupDatabase(config.database);
+      }
+    },
+    
     // Component generation
     components: {
       create: async (name: string) => {
-        // Generate component
-      },
+        await generateComponent(name, config);
+      }
     },
-
+    
     // Hook generation
     hooks: {
       create: async (name: string) => {
-        // Generate hook
-      },
-    },
-
-    // API generation
-    api: {
-      create: async (name: string) => {
-        // Generate API route
-      },
-    },
+        await generateHook(name, config);
+      }
+    }
   };
 }
-
-// Example usage in packages/core/src/features/auth/index.ts
-export const AuthFeature = createFeature({
-  name: 'auth',
-  components: [{ name: 'Login', type: 'client', features: [] }, { name: 'Register', type: 'client', features: [] }],
-  hooks: [{ name: 'useAuth', returnType: 'AuthState' }],
-  api: [{ name: 'login', method: 'POST' }, { name: 'register', method: 'POST' }],
-});

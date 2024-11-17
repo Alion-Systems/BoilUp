@@ -1,40 +1,31 @@
-// packages/core/src/components/createComponent.ts
+import { z } from 'zod';
 
-interface ComponentConfig {
+export interface ComponentConfig {
   name: string;
   type: 'server' | 'client';
   features: string[];
+  props?: Record<string, z.ZodType>;
 }
 
 export function createComponent(config: ComponentConfig) {
   return {
-    // Component generation
+    name: config.name,
+    
     generate: async () => {
-      const files = await generateFiles(config);
+      // Generate component files
+      const files = await generateComponentFiles(config);
+      
+      // Generate tests
       const tests = await generateTests(config);
+      
+      // Generate documentation
       const docs = await generateDocs(config);
-
+      
       return {
         files,
         tests,
-        docs,
+        docs
       };
-    },
+    }
   };
-}
-
-// Helper functions
-async function generateFiles(config: ComponentConfig) {
-  // Implement logic to generate component files
-  return [];
-}
-
-async function generateTests(config: ComponentConfig) {
-  // Implement logic to generate test files
-  return [];
-}
-
-async function generateDocs(config: ComponentConfig) {
-  // Implement logic to generate documentation files
-  return [];
 }
